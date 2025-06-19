@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const db = require('./models');
+const { searchServices } = require('./controllers/searchController');
 
 dotenv.config();
 
@@ -19,6 +20,15 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.get('/', (req, res) => {
   res.send('OTP Auth Server is Running');
 });
+
+
+
+app.get('/api/service/search',(req,res)=>{
+  
+  const query = req.query.query;
+ 
+  res.json({services:searchServices(query)});
+})
 // Sync database and start server
 db.sequelize.sync() // Use { alter: true } if you want to auto-update models
   .then(() => {
