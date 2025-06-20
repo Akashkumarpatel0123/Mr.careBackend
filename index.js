@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const db = require('./models');
-const { searchServices } = require('./controllers/searchController');
+
 
 dotenv.config();
 
@@ -14,29 +14,25 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
+
+//auth 
+
 app.use('/api/auth', require('./routes/authRoutes'));
 
-// Test route (optional)
-app.get('/', (req, res) => {
-  res.send('OTP Auth Server is Running');
-});
+//services
+app.use('/api/service' , require('./routes/serviceRoutes'));
 
 
 
-app.get('/api/service/search',(req,res)=>{
-  
-  const query = req.query.query;
- 
-  res.json({services:searchServices(query)});
-})
+//TODO: here the start for the db
 // Sync database and start server
-db.sequelize.sync() // Use { alter: true } if you want to auto-update models
-  .then(() => {
+// db.sequelize.sync() // Use { alter: true } if you want to auto-update models
+//   .then(() => {
     console.log('Database connected and synced');
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
-  })
-  .catch((err) => {
-    console.error('Database connection failed:', err);
-  });
+  // })
+  // .catch((err) => {
+  //   console.error('Database connection failed:', err);
+  // });

@@ -7,5 +7,5 @@ function searchServices(query){
 
     return SERVICES.filter((service)=>service.toLowerCase().includes(query.toLowerCase()))
 }
-module.exports = {searchServices}; 
+module.exports = searchServices; 
 

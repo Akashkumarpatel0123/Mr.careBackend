@@ -166,9 +166,7 @@ router.post("/nurse-login", nurseLogin);
 
 // searching
 
-router.get('/api/service/search',(req,res)=>{
-  console.log(req.query);
-})
+
 
 
 module.exports = router;
