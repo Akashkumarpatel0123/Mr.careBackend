@@ -17,9 +17,16 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-// Import models after defining sequelize
+// Register models
 db.OTP = require('./OTP')(sequelize, Sequelize.DataTypes);
 db.User = require('./User')(sequelize, Sequelize.DataTypes);
 db.Nurse = require('./Nurse')(sequelize, Sequelize.DataTypes);
 db.NurseOTP = require('./NurseOTP')(sequelize, Sequelize.DataTypes);
+db.UserProfile = require('./UserProfile')(sequelize, Sequelize.DataTypes);
+db.NurseKYC = require('./NurseKYC')(sequelize, Sequelize.DataTypes);
+
+// Association
+db.Nurse.hasOne(db.NurseKYC, { foreignKey: 'nurseId', as: 'kyc' });
+db.NurseKYC.belongsTo(db.Nurse, { foreignKey: 'nurseId', as: 'nurse' });
+
 module.exports = db;
